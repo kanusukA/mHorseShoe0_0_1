@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="KeyHandler">
+      <UniqueIdentifier>{379a0f34-a38b-4755-a42c-43e4d2c97063}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ogre">
+      <UniqueIdentifier>{fed53fbb-56c2-45b5-aff7-d6a01267fb8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{f7e716e0-af79-4efa-a73b-3c5aedc42958}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GDhandler">
+      <UniqueIdentifier>{fe0e0993-f5af-4bb0-b9db-6b0f3fef7579}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Con">
+      <UniqueIdentifier>{28fa1fe3-7633-42fc-9aed-fc0d89bdc629}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer">
+      <UniqueIdentifier>{101b155f-d8a9-4614-8990-a4b161336d3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stuff">
+      <UniqueIdentifier>{9cd9608e-c06b-4e8b-bb04-60765eb67dd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gui">
+      <UniqueIdentifier>{3a411cf1-f966-419b-8e77-40e76bc39900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IMGUI_STDLIB">
+      <UniqueIdentifier>{42660ac9-3123-4b0e-bf3e-85ace2a1b994}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{f83a29b9-349d-4095-9320-0e25f07bdb57}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\feel\consolFunc.cpp">
+      <Filter>KeyHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\feel\Feel.cpp">
+      <Filter>KeyHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\feel\KeyHandler.cpp">
+      <Filter>KeyHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\feel\playerMovement.cpp">
+      <Filter>KeyHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\monster\Monster.cpp">
+      <Filter>Ogre</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kint\Kint.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GDHandler\GDHandler.cpp">
+      <Filter>GDhandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cons.cpp">
+      <Filter>Con</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\timer\glock.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GDHandler\stuff\Stuff.cpp">
+      <Filter>Stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GDHandler\stuff\StuffDynamic.cpp">
+      <Filter>Stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GDHandler\stuff\StuffStatic.cpp">
+      <Filter>Stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gui\Gui.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\IMGUI\repo\imgui\misc\cpp\imgui_stdlib.cpp">
+      <Filter>IMGUI_STDLIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\meshs.cpp">
+      <Filter>Con</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kint\KintVisualizer.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GDHandler\ResourceHandler.cpp">
+      <Filter>GDhandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gui\mediator\GuiMediator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gui\GuiButtons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\feel\consolFunc.h">
+      <Filter>KeyHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\feel\Feel.h">
+      <Filter>KeyHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\feel\KeyHandler.h">
+      <Filter>KeyHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\feel\playerMovement.h">
+      <Filter>KeyHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\monster\Monster.h">
+      <Filter>Ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\kint\Kint.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GDHandler\GDHandler.h">
+      <Filter>GDhandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cons.h">
+      <Filter>Con</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\timer\glock.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GDHandler\stuff\Stuff.h">
+      <Filter>Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GDHandler\stuff\StuffDynamic.h">
+      <Filter>Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GDHandler\stuff\StuffStatic.h">
+      <Filter>Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Gui\Gui.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\IMGUI\repo\imgui\misc\cpp\imgui_stdlib.h">
+      <Filter>IMGUI_STDLIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\meshs.h">
+      <Filter>Con</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\kint\KintVisualizer.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GDHandler\ResourceHandler.h">
+      <Filter>GDhandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\base\Mediator.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Gui\mediator\GuiMediator.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Gui\GuiButtons.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\base\Observer.h">
+      <Filter>Ogre</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
