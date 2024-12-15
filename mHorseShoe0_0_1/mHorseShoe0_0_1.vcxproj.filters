@@ -168,7 +168,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\base\Observer.h">
-      <Filter>Ogre</Filter>
+      <Filter>Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

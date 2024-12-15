@@ -33,16 +33,17 @@ struct AddParam{
 	int positionRenderMesh = 0;
 	int positionColliderMesh = 0;
 
-	std::string obj_name = "Object_Name";
-	std::string msh_name = "Mesh_Path_Name";
+	// Strings are set in a pointer because IMGUI takes string pointers for Input Text. It's more simpler
+	std::string* obj_name = new std::string("Object Name");
+	std::string* msh_name = new std::string("Mesh File Name");
+
 	// type : 
 	// 0 - DYNAMIC
 	// 1 - STATIC
 	// 2 - MESH
 	phyType type = phyType::DYNAMIC;
-	int mass = 0;
-	int pos[3] = { 0,0,0 };
-	int c_size[3] = { 0,0,0 };
+	int* mass = new int(0);
+	
 };
 
 
@@ -70,11 +71,29 @@ public:
 	// Add Mesh functions
 
 	void setRenderMeshName(std::string name) {
-		addParam->msh_name = name;
+		*addParam->msh_name = name;
 	}
 
 	void setObjectName(std::string name) {
-		addParam->obj_name = name;
+		*addParam->obj_name = name;
+	}
+
+	std::string* getRenderMeshName() {
+		return addParam->msh_name;
+	}
+	std::string* getObjectName() {
+		return addParam->obj_name;
+	}
+
+	phyType& getPhysicsType() {
+		return this->addParam->type;
+	}
+	void setPhysicsType(phyType type) {
+		this->addParam->type = type;
+	}
+
+	int* getMass() {
+		return this->addParam->mass;
 	}
 	
 
@@ -84,6 +103,16 @@ public:
 	}
 	void showAdd(bool show) {
 		guiParam->showAdd = show;
+	}
+
+};
+
+
+class GuiMediator : public Mediator {
+public:
+
+	void Notify(MediatorComponent* component, std::string event) const override {
+
 	}
 
 };

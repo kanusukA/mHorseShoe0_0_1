@@ -4,6 +4,8 @@
 
 #include <GDHandler/ResourceHandler.h>
 
+#include <feel/playerMovement.h>
+
 
 
 
@@ -35,14 +37,31 @@ private:
 
 	GuiComponent* guiComponent;
 
+	int renderMeshesPosition = 0;
+	int colliderMeshesPosition = 0;
 	std::vector<std::string>* renderMeshes;
 	std::vector<std::string>* colliderMeshes;
+
+	PlayerObserver* playerObserver = nullptr;
+
+	// Add Variable
+	int pos[3] = { 0,0,0 };
+	int c_size[3] = { 0,0,0 };
+
+	// Gui Variables
+	bool showStatusTab = false;
+	bool showAddTab = false;
+
+	ImVec2 StatusWindowPos;
+	int* fps;
 
 public:
 
 	// EXTERNAL
-	void StatusTab(ImVec2 pos, int* fps, const Ogre::Vector3* position, Ogre::Vector3* rotation);
+	void StatusTab(ImVec2 pos, int* fps);
 	void ShowADDTab(bool b);
+
+	void setPlayerObserver(PlayerObserver* pObserver);
 
 	// INIT
 	void initGui(Ogre::ImGuiOverlay* overlay, GuiComponent* component);

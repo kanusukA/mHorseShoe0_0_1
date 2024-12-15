@@ -9,8 +9,6 @@
 // 16 millisec in each frame for 60FPS
 const double MS_PER_FRAME = 16;
 
-ResourceHandler* ResourceHandler::instancePtr = nullptr;
-
 int main() {
 
 	int fps = 1;
@@ -26,7 +24,9 @@ int main() {
 	
 	Ogre::Root* oRoot = monster->oRoot;
 
-	monster->InitMonster(ctx.initialiseImGui());
+	GuiMediator* mediator = new GuiMediator();
+
+	monster->InitMonster(ctx.initialiseImGui(), mediator);
 	ctx.addInputListener(ctx.getImGuiInputListener());
 
 	monster->setupTestTrack();
@@ -36,10 +36,10 @@ int main() {
 	kint->InitPhysics();
 
 	//GDHANDLER
-	GDHandler gdhandler = GDHandler( monster);
+	GDHandler gdhandler = GDHandler(monster);
 	inputKeys = gdhandler.keyHandler->inputKeys;
 
-	gdhandler.addPlayerMovement(monster->addCamera("CAMERA_MAN", Ogre::Vector3(0, 10, 100)));
+	gdhandler.addPlayerNode();
 
 	// MAIN LOOP
 	double startTime;

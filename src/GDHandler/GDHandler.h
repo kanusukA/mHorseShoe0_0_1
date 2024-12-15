@@ -17,16 +17,12 @@ public:
 
 	Monster* monster;
 
-	Ogre::SceneNode* playerNode = nullptr;
-	Ogre::Vector3* playerPosition;
-	Ogre::Vector3* playerRotation;
+	PlayerSubject* playerSubject = nullptr;
 
 	std::vector<StuffDynamic*> sDynColl;
 	std::vector<StuffStatic*> sStaticColl;
 
-	bool consolMode = false;
-
-	void addPlayerMovement(Ogre::SceneNode* pNode);
+	void addPlayerNode();
 
 	// FEEL
 	void windowSizeChanged() override;

@@ -37,13 +37,20 @@ Monster::Monster(Ogre::Root* root, Ogre::RenderWindow* rWin, Ogre::OverlaySystem
 	FPS = &_FPS;
 }
 
-void Monster::InitMonster(Ogre::ImGuiOverlay* imguiOverlay) {
+void Monster::InitMonster(Ogre::ImGuiOverlay* imguiOverlay, Mediator* mediator) {
 
 	// FIX DEFAULT VALUES !!
 	_setupSDL3(WINDOW_WIDTH,WINDOW_HEIGHT,"Psycho",getHWND());
 
+	// Set Gui Mediator for connectinf with GDHandler
+	GuiComponent* component = new GuiComponent();
+	component->setMediator(mediator);
+
+	// Add Camera
+	this->addCamera(MAIN_CAMERA_NAME, Ogre::Vector3(0, 0, 0));
+
 	// Gui
-	initGui(imguiOverlay);
+	initGui(imguiOverlay,component);
 
 }
 
@@ -61,15 +68,16 @@ Ogre::SceneNode* Monster::addCamera(Ogre::String camName, Ogre::Vector3 startPos
 
 	renderWindow->addViewport(cam);
 
+	this->CameraNode = camNode;
 	
 
 	return camNode;
 }
 
-void Monster::addGuiPlayerInfo(Ogre::Vector3* position, Ogre::Vector3* rotation)
+void Monster::addGuiPlayerInfo()
 {
 	// ADD and SHOW Gui Status tab
-	StatusTab(ImVec2(0, 0), FPS, position,rotation);
+	StatusTab(ImVec2(0, 0), FPS);
 }
 
 Ogre::SceneNode* Monster::loadMeshScnNode(Ogre::String scnNodeName, Ogre::String meshName)
@@ -176,28 +184,33 @@ void Monster::addResourceLocation(const char* loc)
 	
 }
 
+Ogre::SceneNode* Monster::getPlayerSceneNode()
+{
+	return this->CameraNode;
+}
+
 void Monster::preLoadMeshData()
 {
 	// Get Resource Data
-	ResourceHandler::getSingleton()->initResourceCheck();
+	//ResourceHandler::getSingleton()->initResourceCheck();
 
-	// Add location to ResourceGroupManager
-	
-	addResourceLocation(ResourceHandler::getSingleton()->getRenderMeshLocation());
-	addResourceLocation(ResourceHandler::getSingleton()->getColliderMeshLocation());
-	
+	//// Add location to ResourceGroupManager
+	//
+	//addResourceLocation(ResourceHandler::getSingleton()->getRenderMeshLocation());
+	//addResourceLocation(ResourceHandler::getSingleton()->getColliderMeshLocation());
+	//
 
-	// Get names of meshes
-	std::vector<HorseMeshResource> hmr = ResourceHandler::getSingleton()->getMeshResources();
-	preLoadRenderMeshes.resize(hmr.size());
+	//// Get names of meshes
+	//std::vector<HorseMeshResource> hmr = ResourceHandler::getSingleton()->getMeshResources();
+	//preLoadRenderMeshes.resize(hmr.size());
 
-	// FIx Error Here
-	for (int i = 0; i < hmr.size(); i++) {
-		// The File system followed by Resource Handler is not the same as followed by Ogre.
-		// NOW FIX IT.
-		/*preLoadRenderMeshes[i] = Ogre::MeshManager::getSingleton().load(hmr[i].Name,
-			Ogre::ResourceGroupManager::getSingleton().DEFAULT_RESOURCE_GROUP_NAME);*/
-	}
+	//// FIx Error Here
+	//for (int i = 0; i < hmr.size(); i++) {
+	//	// The File system followed by Resource Handler is not the same as followed by Ogre.
+	//	// NOW FIX IT.
+	//	/*preLoadRenderMeshes[i] = Ogre::MeshManager::getSingleton().load(hmr[i].Name,
+	//		Ogre::ResourceGroupManager::getSingleton().DEFAULT_RESOURCE_GROUP_NAME);*/
+	//}
 	
 	
 }

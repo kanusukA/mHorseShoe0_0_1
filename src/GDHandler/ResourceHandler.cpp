@@ -34,7 +34,7 @@ std::filesystem::path ResourceHandler::find(std::string fileName, ResourceHandle
 			// Remove invaild lines
 			if (!line.empty()) {
 
-				cout << "Searching in - " << line << endl;
+				std::cout << "Searching in - " << line << std::endl;
 
 				if (!inGroup) {
 					switch (type)
@@ -59,7 +59,7 @@ std::filesystem::path ResourceHandler::find(std::string fileName, ResourceHandle
 						for (const auto& entry : fs::directory_iterator(line)) {
 
 							if (entry.path().filename().string() == fileName) {
-								cout << "File found At - " << line << endl;
+								std::cout << "File found At - " << line << std::endl;
 								return entry.path();
 							}
 						}
@@ -87,9 +87,9 @@ std::filesystem::path ResourceHandler::find(std::string fileName, ResourceHandle
 	in_stream.close();
 }
 
-string ResourceHandler::getResourceFile(string fileName, ResourceHandlerType type)
+std::string ResourceHandler::getResourceFile(std::string fileName, ResourceHandlerType type)
 {
-	filesystem::path filePath;
+	std::filesystem::path filePath;
 
 	try
 	{
@@ -97,8 +97,8 @@ string ResourceHandler::getResourceFile(string fileName, ResourceHandlerType typ
 	}
 	catch (const std::exception&)
 	{
-		cout << "Resource File Not Found !";
-		return;
+		std::cout << "Resource File Not Found !";
+		return NULL;
 	}
 	switch (type)
 	{

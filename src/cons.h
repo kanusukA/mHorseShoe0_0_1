@@ -2,11 +2,7 @@
 
 #include <iostream>
 
-enum HorseResourceType
-{
-	RENDER_MESH,
-	COLLIDER_MESH
-};
+
 
 constexpr const char* WINDOW_NAME = "Psycho";
 

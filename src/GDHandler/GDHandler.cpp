@@ -1,14 +1,16 @@
 #include "GDHandler.h"
 
 // Add newly made player Subject and observers
+// Get this shit working
 
-GDHandler::GDHandler( Monster* renderer) {
+GDHandler::GDHandler(Monster* renderer) {
 	
 	monster = renderer;
 
 	// PRE MESH LOADING
 	// Load meshs in ogre3d
 	monster->preLoadMeshData();
+
 
 	// FEELS
 	initFeel(monster->sdlWindow);
@@ -17,15 +19,15 @@ GDHandler::GDHandler( Monster* renderer) {
 
 }
 
-void GDHandler::addPlayerMovement(Ogre::SceneNode* pNode)
+void GDHandler::addPlayerNode()
 {
-	playerNode = pNode;
-
-	// Pre initalize vaiables as they remain null until first input is recieved
-	playerPosition = new Ogre::Vector3(0, 0, 0);
-	playerRotation = new Ogre::Vector3(0, 0, 0);
+	if (this->playerSubject == nullptr) {
+		this->playerSubject = new PlayerSubject(monster->getPlayerSceneNode());
+	}
+	
+	PlayerObserver* playerObserver = new PlayerObserver(*this->playerSubject);
 	// Show Gui Player info
-	monster->addGuiPlayerInfo(playerPosition, playerRotation);
+	monster->setPlayerObserver(playerObserver);
 	
 }
 
@@ -75,7 +77,7 @@ void GDHandler::showGuiAddTab()
 //}
 
 
-
+// Transfer into Stuff
 void GDHandler::createStuffRigidDynamic(std::string name, Ogre::String meshName, PxTransform position, PxReal mass, PxGeometry* geo)
 {
 	StuffDynamic* sDyn = new StuffDynamic();
@@ -138,9 +140,11 @@ void GDHandler::_setupGround()
 void GDHandler::_updatePlayerPrameters(float deltaTime)
 {
 	// PLAYER MOVEMENT
-	if (playerNode != nullptr && mouseHidden) {
-		updateRotation(playerNode, keyHandler->mInput, deltaTime, playerRotation);
-		updatePosition(playerNode, keyHandler->inputKeys, deltaTime, playerPosition);
+	// Updates the player Scenen node set in the moster player Node
+	// Updates the playerSubject which in turn updates all the assigned Observers
+	if (playerSubject != nullptr && mouseHidden) {
+		updateRotation(keyHandler->mInput, deltaTime, playerSubject);
+		updatePosition(keyHandler->inputKeys, deltaTime, playerSubject);
 	}
 
 }

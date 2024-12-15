@@ -18,19 +18,30 @@ void Gui::initGui(Ogre::ImGuiOverlay* overlay, GuiComponent* component) {
 }
 
 
-void Gui::StatusTab(ImVec2 pos,int* fps,const Ogre::Vector3* position, Ogre::Vector3* rotation)
+void Gui::StatusTab(ImVec2 pos,int* fps)
 {
 	
-	param->statusPosition = pos;
-	param->pPosition = position;
-	param->pRotation = rotation;
-	param->FPS = fps;
+	this->StatusWindowPos = pos;
+	this->fps = fps;
+
+	if (this->playerObserver == nullptr) {
+		std::cout << "Information not provided for Status Tab!";
+	}
+	else {
+		showStatusTab = true;
+	}
 
 }
 
 void Gui::ShowADDTab(bool b)
 {
-	param->showADD = b;
+	std::cout << "Showing Add Status - " << b << std::endl;
+	showAddTab = b;
+}
+
+void Gui::setPlayerObserver(PlayerObserver* pObserver)
+{
+	this->playerObserver = pObserver;
 }
 
 
@@ -38,10 +49,10 @@ void Gui::updateGui()
 {
 	imOverlay->NewFrame();
 
-	if (param->showStatus) {
+	if (this->showStatusTab) {
 		_statusTab();
 	}
-	if (param->showADD) {
+	if (this->showAddTab) {
 		_addTab();
 	}
 	_debugTab();
@@ -57,26 +68,26 @@ void Gui::shutdown()
 
 void Gui::_statusTab()
 {
-	ImGui::SetNextWindowPos(param->statusPosition);
+	ImGui::SetNextWindowPos(ImVec2(0,0));
 	ImGui::SetNextWindowSize(ImVec2(250, 100));
 	
 	ImGui::Begin("STATUS",0,ImGuiWindowFlags_NoMove && ImGuiWindowFlags_NoCollapse && ImGuiWindowFlags_NoResize);
 
 	ImGui::Text("Position");
-	ImGui::Value("X", param->pPosition->x);
+	ImGui::Value("X", this->playerObserver->getPlayerPosition().x);
 	ImGui::SameLine();
-	ImGui::Value("Y", param->pPosition->y);
+	ImGui::Value("Y", this->playerObserver->getPlayerPosition().y);
 	ImGui::SameLine();
-	ImGui::Value("Z", param->pPosition->z);
+	ImGui::Value("Z", this->playerObserver->getPlayerPosition().z);
 
 	ImGui::Text("Rotation");
-	ImGui::Value("X", param->pRotation->x);
+	ImGui::Value("X", this->playerObserver->getPlayerRotation().x);
 	ImGui::SameLine();
-	ImGui::Value("Y", param->pRotation->y);
+	ImGui::Value("Y", this->playerObserver->getPlayerRotation().y);
 	ImGui::SameLine();
-	ImGui::Value("Z", param->pRotation->z);
+	ImGui::Value("Z", this->playerObserver->getPlayerRotation().z);
 
-	ImGui::Value("FPS", *param->FPS);
+	ImGui::Value("FPS", *this->fps);
 
 	ImGui::End();
 
@@ -85,53 +96,54 @@ void Gui::_statusTab()
 void Gui::_addTab()
 {
 	ImGui::Begin("ADD");
-	ImGui::InputText("Add Name", &ap->add_name);
+	ImGui::InputText("Add Name",this->guiComponent->getObjectName());
 
-	ImGui::BeginCombo("Render Mesh", ap->renderMeshes[ap->positionRenderMesh]->c_str());
+	if(this->renderMeshes->size() > 0) {
 
-	for (int i = 0; i < ap->renderMeshes.size(); i++)
-	{
-		if (ImGui::Selectable(ap->renderMeshes[i]->c_str(), i == ap->positionRenderMesh)) {
-			ap->positionRenderMesh = i;
+		ImGui::BeginCombo("Render Mesh", this->renderMeshes->at(renderMeshesPosition).c_str());
+
+		for (int i = 0; i < this->renderMeshes->size(); i++)
+		{
+			if (ImGui::Selectable(this->renderMeshes->at(i).c_str(), i == this->renderMeshesPosition)) {
+				this->renderMeshesPosition = i;
+			}
 		}
-	}
 
-	ImGui::EndCombo();
-	
+		ImGui::EndCombo();
+
+	}
+	else {
+		ImGui::Text("No Render Mesh Found.");
+	}
 	
 	ImGui::Text("PhysX Type");
 
-	if (ImGui::RadioButton("DYNAMIC", ap->type == phyType::DYNAMIC))
+	if (ImGui::RadioButton("DYNAMIC", this->guiComponent->getPhysicsType() == phyType::DYNAMIC))
 	{
-		ap->type = phyType::DYNAMIC;
+		this->guiComponent->setPhysicsType(phyType::DYNAMIC);
 	}
-	if (ImGui::RadioButton("STATIC", ap->type == phyType::STATIC))
+	if (ImGui::RadioButton("STATIC", this->guiComponent->getPhysicsType() == phyType::STATIC))
 	{
-		ap->type = phyType::STATIC;
+		this->guiComponent->setPhysicsType(phyType::STATIC);
 	}
-	if (ImGui::RadioButton("MESH", ap->type == phyType::MESH))
+	if (ImGui::RadioButton("MESH", this->guiComponent->getPhysicsType() == phyType::MESH))
 	{
-		ap->type = phyType::MESH;
+		this->guiComponent->setPhysicsType(phyType::MESH);
 	}
 
-	if (ap->type == phyType::DYNAMIC) {
-		ImGui::InputInt("Mass", &ap->mass);
-		ImGui::InputInt3("Collider Size", ap->c_size);
+	if (this->guiComponent->getPhysicsType() == phyType::DYNAMIC) {
+		ImGui::InputInt("Mass", this->guiComponent->getMass());
+		ImGui::InputInt3("Collider Size", this->c_size);
 
-	}else if (ap->type == phyType::STATIC) {
-		ImGui::InputInt3("Collider Size", ap->c_size);
+	}else if (this->guiComponent->getPhysicsType() == phyType::STATIC) {
+		ImGui::InputInt3("Collider Size", this->c_size);
 	}
 	
 
-	ImGui::InputInt3("Position", ap->pos);
+	ImGui::InputInt3("Position", this->pos);
 
 	if (ImGui::Button("ADD")) {
-		if (addObject()) {
-			ap->add_name = "Object_Name";
-			ap->msh_name = "Mesh_Path_Name";
-
-			param->showADD = false;
-		}
+		this->guiComponent->addObject();
 	}
 
 	ImGui::End();
@@ -142,13 +154,11 @@ void Gui::_debugTab()
 	ImGui::Begin("Debug");
 	if (ImGui::Button("ShowRender"))
 	{
-		param->showRenderShapes = !param->showRenderShapes;
-		showRenderShapes(param->showRenderShapes);
+		this->guiComponent->showRenderMeshes();
 	}
 	if (ImGui::Button("ShowDebugLines"))
 	{
-		param->showDebugLines = !param->showDebugLines;
-		showDebugLines(param->showDebugLines);
+		this->guiComponent->showDebugLines();
 	}
 	ImGui::End();
 }
